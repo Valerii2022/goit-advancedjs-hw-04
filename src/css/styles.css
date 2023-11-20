@@ -23,3 +23,46 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+body {
+  background-color: #e8e8e8;
+  height: 100vh;
+}
+
+.header {
+  background-color: #0740ba;
+  padding: 20px;
+}
+
+.search-form {
+  width: 300px;
+  border-radius: 4px;
+  margin: 0 auto;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  height: 32px;
+  border: none;
+  outline: none;
+  padding: 0 10px;
+}
+
+.search-btn {
+  height: 32px;
+  background-color: #e8e8e8;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* .list-section {
+}
+.image-list {
+} */
