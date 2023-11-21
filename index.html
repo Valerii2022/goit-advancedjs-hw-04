@@ -8,23 +8,25 @@
   <title>Image search</title>
   
   <script type="module" crossorigin src="/goit-advancedjs-hw-04/commonHelpers.js"></script>
-  <link rel="modulepreload" crossorigin href="/goit-advancedjs-hw-04/assets/vendor-f070e68e.js">
-  <link rel="stylesheet" href="/goit-advancedjs-hw-04/assets/vendor-e5212ee8.css">
-  <link rel="stylesheet" href="/goit-advancedjs-hw-04/assets/index-e11063e8.css">
+  <link rel="modulepreload" crossorigin href="/goit-advancedjs-hw-04/assets/vendor-aca6d3a3.js">
+  <link rel="stylesheet" href="/goit-advancedjs-hw-04/assets/vendor-eb6030bc.css">
+  <link rel="stylesheet" href="/goit-advancedjs-hw-04/assets/index-c0bb2b28.css">
 </head>
 
 <body>
 
   <header class="header">
-    <form class="search-form" id="search-form">
-      <input class="input" type="text" name="searchQuery" autocomplete="off" placeholder="Search images..." />
-      <button type="submit" class="search-btn">Search</button>
-    </form>
-
+    <div class="container">
+      <form class="search-form" id="search-form">
+        <input class="input" type="text" name="searchQuery" autocomplete="off" placeholder="Search images..." />
+        <button type="submit" class="search-btn">Search</button>
+      </form>
+    </div>
   </header>
 
-  <section class="list-section">
-    <ul class="image-list"></ul>
+  <section class="container">
+    <p class="loader hidden">Loading...</p>
+    <ul class="gallery"></ul>
   </section>
 
   
