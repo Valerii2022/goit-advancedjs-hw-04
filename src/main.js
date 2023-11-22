@@ -55,7 +55,7 @@ function onSuccess(data) {
   refs.loader.classList.add('hidden');
   if (!data.totalHits) {
     iziToast.error({
-      message: `Sorry, we don&apos;t find any images. Please try again.`,
+      message: `Sorry, there are no images matching your search query. Please try again.`,
       layout: 2,
       position: 'topLeft',
       transitionIn: 'fadeInRight',
