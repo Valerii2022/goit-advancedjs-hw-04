@@ -16,6 +16,6 @@ export const fetchImages = async (query, page) => {
     const { data } = await axios.get(`${BASE_URL}`, { params });
     return data;
   } catch (error) {
-    throw new Error(err.message);
+    throw new Error(error.message);
   }
 };
