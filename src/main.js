@@ -24,6 +24,10 @@ refs.form.addEventListener('submit', handleSeachBtnClick);
 function handleSeachBtnClick(e) {
   e.preventDefault();
   refs.loader.classList.remove('hidden');
+  page = 1;
+  query = '';
+  uploadedImages = 0;
+  totalImages = 0;
   if (!e.currentTarget.searchQuery.value.trim()) {
     iziToast.error({
       message: `Sorry, your search query is empty. Please try again.`,
@@ -33,12 +37,9 @@ function handleSeachBtnClick(e) {
       transitionOut: 'fadeOutLeft',
     });
     refs.loader.classList.add('hidden');
+    refs.list.innerHTML = '';
     return;
   }
-  page = 1;
-  query = '';
-  uploadedImages = 0;
-  totalImages = 0;
   fetchImages(e.currentTarget.searchQuery.value.trim(), page)
     .then(data => {
       onSuccess(data);
@@ -61,6 +62,7 @@ function onSuccess(data) {
       transitionIn: 'fadeInRight',
       transitionOut: 'fadeOutLeft',
     });
+    refs.list.innerHTML = '';
     return;
   }
   page += 1;
