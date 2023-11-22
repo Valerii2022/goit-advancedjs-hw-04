@@ -1,8 +1,8 @@
 // import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
-import { fetchImages } from './pixabay-API';
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
+// import 'izitoast/dist/css/iziToast.min.css';
+import { PixabayAPI } from './pixabay-API';
+// import SimpleLightbox from 'simplelightbox';
+// import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const refs = {
   form: document.querySelector('.search-form'),
@@ -12,6 +12,8 @@ const refs = {
   loader: document.querySelector('.loader'),
 };
 
+const pixabayApi = new PixabayAPI();
+
 let page = 1;
 
 refs.form.addEventListener('submit', handleSeachBtnClick);
@@ -19,7 +21,8 @@ refs.form.addEventListener('submit', handleSeachBtnClick);
 function handleSeachBtnClick(e) {
   e.preventDefault();
   refs.loader.classList.remove('hidden');
-  fetchImages(e.currentTarget.searchQuery.value.trim(), page)
+  pixabayApi
+    .fetchPhotos(e.currentTarget.searchQuery.value.trim(), page)
     .then(data => {
       onSuccess(data);
     })
@@ -38,7 +41,6 @@ function onSuccess(data) {
 }
 
 function markup({ hits }) {
-  console.log(hits);
   const result = hits
     .map(el => {
       return `<a class="link" href=${el.largeImageURL} id=${el.id}><div class="photo-card" >
@@ -76,4 +78,4 @@ function markup({ hits }) {
 //     transitionOut: 'fadeOutLeft',
 //   });
 
-new SimpleLightbox('.link');
+// new SimpleLightbox('.link');
