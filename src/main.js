@@ -22,6 +22,7 @@ let modalLightbox;
 refs.form.addEventListener('submit', handleSeachBtnClick);
 
 async function handleSeachBtnClick(e) {
+  observer.disconnect(refs.sentinel);
   e.preventDefault();
   refs.loader.classList.remove('hidden');
   page = 1;
@@ -68,6 +69,7 @@ async function handleSeachBtnClick(e) {
       transitionOut: 'fadeOutLeft',
     });
   }
+  observer.observe(refs.sentinel);
   e.target.reset();
 }
 
@@ -172,5 +174,3 @@ const intersectionObserve = entries => {
 const observer = new IntersectionObserver(intersectionObserve, {
   rootMargin: '200px',
 });
-
-observer.observe(refs.sentinel);
