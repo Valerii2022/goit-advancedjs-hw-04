@@ -21,13 +21,14 @@ let modalLightbox;
 
 refs.form.addEventListener('submit', handleSeachBtnClick);
 
-function handleSeachBtnClick(e) {
+async function handleSeachBtnClick(e) {
   e.preventDefault();
   refs.loader.classList.remove('hidden');
   page = 1;
   query = '';
   uploadedImages = 0;
   totalImages = 0;
+
   if (!e.currentTarget.searchQuery.value.trim()) {
     iziToast.error({
       message: `Sorry, your search query is empty. Please try again.`,
@@ -40,16 +41,34 @@ function handleSeachBtnClick(e) {
     refs.list.innerHTML = '';
     return;
   }
-  fetchImages(e.currentTarget.searchQuery.value.trim(), page)
-    .then(data => {
-      onSuccess(data);
-    })
-    .catch(err => {
-      refs.loader.classList.add('hidden');
-      console.log(err);
+
+  try {
+    query = e.currentTarget.searchQuery.value.trim();
+    const data = await fetchImages(
+      e.currentTarget.searchQuery.value.trim(),
+      page
+    );
+    onSuccess(data);
+    if (uploadedImages >= totalImages && uploadedImages > 0) {
+      iziToast.info({
+        message: `We're sorry, but you've reached the end of search results.`,
+        layout: 2,
+        position: 'topLeft',
+        transitionIn: 'fadeInRight',
+        transitionOut: 'fadeOutLeft',
+      });
+    }
+  } catch (error) {
+    refs.loader.classList.add('hidden');
+    iziToast.error({
+      message: `${error.message}`,
+      layout: 2,
+      position: 'topLeft',
+      transitionIn: 'fadeInRight',
+      transitionOut: 'fadeOutLeft',
     });
-  query = e.currentTarget.searchQuery.value.trim();
-  e.currentTarget.reset();
+  }
+  e.target.reset();
 }
 
 function onSuccess(data) {
@@ -111,28 +130,35 @@ function markup({ hits }) {
   return result;
 }
 
-function loadMoreImages() {
+async function loadMoreImages() {
   modalLightbox.destroy();
-  fetchImages(query, page)
-    .then(data => {
-      refs.list.insertAdjacentHTML('beforeend', markup(data));
-      page += 1;
-      uploadedImages += data.hits.length;
-      modalLightbox = new SimpleLightbox('.gallery a', {
-        captionDelay: 250,
-      });
-      modalLightbox.refresh();
-    })
-    .catch(err => {
-      iziToast.error({
-        message: `Something went wrong. Please try again!`,
+
+  try {
+    const data = await fetchImages(query, page);
+    refs.list.insertAdjacentHTML('beforeend', markup(data));
+    page += 1;
+    uploadedImages += data.hits.length;
+    modalLightbox = new SimpleLightbox('.gallery a', {
+      captionDelay: 250,
+    });
+    if (uploadedImages >= totalImages) {
+      iziToast.info({
+        message: `We're sorry, but you've reached the end of search results.`,
         layout: 2,
         position: 'topLeft',
         transitionIn: 'fadeInRight',
         transitionOut: 'fadeOutLeft',
       });
-      console.log(err);
+    }
+  } catch (error) {
+    iziToast.error({
+      message: `${error.message}`,
+      layout: 2,
+      position: 'topLeft',
+      transitionIn: 'fadeInRight',
+      transitionOut: 'fadeOutLeft',
     });
+  }
 }
 
 const intersectionObserve = entries => {
