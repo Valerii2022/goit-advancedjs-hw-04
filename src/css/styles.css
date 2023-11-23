@@ -106,6 +106,7 @@ body {
 }
 
 .photo-card img {
+  min-height: 270px;
   width: 100%;
 }
 

@@ -107,7 +107,7 @@ function markup({ hits }) {
   const result = hits
     .map(el => {
       return `<a class="link" href=${el.largeImageURL} id=${el.id}><div class="photo-card" >
-    <div class="img-wrap"><img src=${el.webformatURL} alt=${el.tags} loading="lazy" /></div>
+    <div class="img-wrap"><img src=${el.webformatURL} alt=${el.tags} loading="lazy"/></div>
     <div class="info">
         <p class="info-item">
             <b>Likes</b>
